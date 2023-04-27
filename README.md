@@ -36,14 +36,62 @@ ssh hostuser@host_ip_address
 Step 7: Create the inventory file
 
 sudo vim /etc/ansible/hosts
-and add hosts ip address - e.g. 65.0.105.243
+and add hosts ip address - e.g. 164.92.249.174
 
 <img width="691" alt="Screenshot 2023-04-27 at 11 55 08 AM" src="https://user-images.githubusercontent.com/36581523/234777380-39b83dcd-d4a9-44a5-b922-6bba9425c82b.png">
 
 Step 8: Create the playbook file
 
+---
+- name: Taskmanager Restful Apis Deployment using Ansible
+  hosts: web
+  become: yes
+
+  tasks: 
+    
+    - name: Install NodeJs
+      apt:
+       name: nodejs
+       state: present
+
+    - name: Install NPM
+      apt: 
+       name: npm
+       state: present
+    
+    - name: Install PM2
+      npm:
+       name: pm2
+       global: yes
+
+    - name: Clone Git Repo
+      git:
+       repo: https://github.com/sagar-18/task-manager.git
+       dest: /newdata/task-manager   
+    
+    - name: Install Project Dependencies
+      npm:
+       path: /newdata/task-manager    
+
+    - name: Start PM2 process for the API
+      become_user: root
+      command: /usr/local/bin/pm2 start /newdata/task-manager/task-manager-start.js --name task-manager
+      
+    - name: Save PM2 process list
+      become_user: root
+      command: pm2 save 
 
 
+Step 9: Run this playbook file now 
+Command: sudo ansible-playbook -i /etc/ansible/inventory deploy_task_manager.yml 
+
+<img width="1512" alt="Screenshot 2023-04-27 at 4 19 29 PM" src="https://user-images.githubusercontent.com/36581523/234840857-151d1e79-1316-47a3-aa00-77b3180770f9.png">
+
+Step 10: 
+
+<img width="573" alt="Screenshot 2023-04-27 at 4 23 24 PM" src="https://user-images.githubusercontent.com/36581523/234841720-353e001f-dfa6-40a6-9159-5ba8254215ff.png">
 
 
+APP IS LIVE ON HOST NODE:
 
+<img width="869" alt="Screenshot 2023-04-27 at 4 19 53 PM" src="https://user-images.githubusercontent.com/36581523/234840930-d25c1a3c-974c-4174-a946-903f90d196f1.png">
