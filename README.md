@@ -33,4 +33,17 @@ ssh hostuser@host_ip_address
 
 <img width="854" alt="Screenshot 2023-04-27 at 11 46 43 AM" src="https://user-images.githubusercontent.com/36581523/234775766-cd9e9ef9-0988-43e8-9814-15096b26793e.png">
 
+Step 7: Create the inventory file
+
+sudo vim /etc/ansible/hosts
+and add hosts ip address - e.g. 65.0.105.243
+
+<img width="691" alt="Screenshot 2023-04-27 at 11 55 08 AM" src="https://user-images.githubusercontent.com/36581523/234777380-39b83dcd-d4a9-44a5-b922-6bba9425c82b.png">
+
+Step 8: Create the playbook file
+
+
+
+
+
 
