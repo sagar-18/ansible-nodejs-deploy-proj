@@ -42,45 +42,7 @@ and add hosts ip address - e.g. 164.92.249.174
 
 Step 8: Create the playbook file
 
----
-- name: Taskmanager Restful Apis Deployment using Ansible
-  hosts: web
-  become: yes
-
-  tasks: 
-    
-    - name: Install NodeJs
-      apt:
-       name: nodejs
-       state: present
-
-    - name: Install NPM
-      apt: 
-       name: npm
-       state: present
-    
-    - name: Install PM2
-      npm:
-       name: pm2
-       global: yes
-
-    - name: Clone Git Repo
-      git:
-       repo: https://github.com/sagar-18/task-manager.git
-       dest: /newdata/task-manager   
-    
-    - name: Install Project Dependencies
-      npm:
-       path: /newdata/task-manager    
-
-    - name: Start PM2 process for the API
-      become_user: root
-      command: /usr/local/bin/pm2 start /newdata/task-manager/task-manager-start.js --name task-manager
-      
-    - name: Save PM2 process list
-      become_user: root
-      command: pm2 save 
-
+<img width="968" alt="Screenshot 2023-04-27 at 4 24 58 PM" src="https://user-images.githubusercontent.com/36581523/234842028-41a8a73a-0b44-4f4a-b873-ad48808fdbac.png">
 
 Step 9: Run this playbook file now 
 Command: sudo ansible-playbook -i /etc/ansible/inventory deploy_task_manager.yml 
